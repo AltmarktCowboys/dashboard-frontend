@@ -59,28 +59,32 @@ class Shell extends React.Component<null, ShellContainerState> {
     private saveConfiguration(data: any) {
         ShellActions.saveConfiguration(assign({}, data, {
             userId: this.state.shell.profile.user_id
-        }));
+        }), this.state.shell.configurationTileId);
     }
 
     public render() {
         return (
-            <div className={ theme["shell"] }>
-                <ConfigurationDialog
-                    tileId={ this.state.shell.configurationTileId }
-                    templateId={ this.state.shell.configurationTemplateId }
-                    onCancel={ this.cancelConfiguration }
-                    onSave={ this.saveConfiguration }
-                />
-                <Sidebar
-                    showTiles={ this.state.shell.showTiles }
-                    loggedIn={ this.state.shell.loggedIn }
-                    image={ this.state.shell.loggedIn ? this.state.shell.profile.picture : null }
-                    onSignIn={ this.onSignIn }
-                    onSignOut={ this.onSignOut }
-                    onAddTile={ this.onAddTile }
-                    onTileSelected={ this.onTileSelected }
-                />
-                <Dashboard />
+            <div className={ theme["shell-container"] }>
+                <LoadingOverlay loading={ this.state.shell.loading }>
+                    <div className={ theme["shell"] }>
+                        <ConfigurationDialog
+                            tileId={ this.state.shell.configurationTileId }
+                            templateId={ this.state.shell.configurationTemplateId }
+                            onCancel={ this.cancelConfiguration }
+                            onSave={ this.saveConfiguration }
+                        />
+                        <Sidebar
+                            showTiles={ this.state.shell.showTiles }
+                            loggedIn={ this.state.shell.loggedIn }
+                            image={ this.state.shell.loggedIn ? this.state.shell.profile.picture : null }
+                            onSignIn={ this.onSignIn }
+                            onSignOut={ this.onSignOut }
+                            onAddTile={ this.onAddTile }
+                            onTileSelected={ this.onTileSelected }
+                        />
+                        <Dashboard />
+                    </div>
+                </LoadingOverlay>
             </div>
         );
     }

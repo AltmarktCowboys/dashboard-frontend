@@ -15,7 +15,14 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
 
         this.onAuthenticated = this.onAuthenticated.bind(this);
 
-        this._auth = new Auth0Lock(App.config.api.auth0.clientId, App.config.api.auth0.domain);
+        this._auth = new Auth0Lock(App.config.api.auth0.clientId, App.config.api.auth0.domain, {
+            languageDictionary: {
+                title: "Dashboard"
+            },
+            theme: {
+                logo: 'https://teecraze.com/wp-content/uploads/spacecowboy3.jpg'
+            },
+        });
         this._auth.on("authenticated", this.onAuthenticated);
     }
 
@@ -30,6 +37,7 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
 
     public getInitialState(): ShellState {
         return {
+            loading: false,
             configurationTemplateId: null,
             configurationTileId: null,
             showTiles: false,
@@ -67,6 +75,20 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                 return assign({}, state, {
                     configurationTemplateId: null,
                     configurationId: null
+                });
+            case ShellActionTypes.SHELL_ADD_TILE:
+                return assign({}, state, {
+                    configurationTemplateId: null,
+                    configurationId: null,
+                    loading: true
+                });
+            case ShellActionTypes.SHELL_ADD_TILE_SUCCESS:
+                return assign({}, state, {
+                    loading: false
+                });
+            case ShellActionTypes.SHELL_ADD_TILE_FAILURE:
+                return assign({}, state, {
+                    loading: false
                 });
         }
 

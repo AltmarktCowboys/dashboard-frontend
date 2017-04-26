@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as classNames from "classnames";
+import { PacmanLoader } from "halogen";
 const theme = require("./LoadingOverlay.scss");
 
 interface LoadingOverlayProps {
@@ -16,7 +17,7 @@ class LoadingOverlay extends React.Component<LoadingOverlayProps, undefined> {
             <div className={ theme["loading-overlay"] }>
                 <div className={ loadingClass }>
                     <div className={ theme["loading-body"] }>
-                        <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw" />
+                        <PacmanLoader color="#4DAF7C" />
                     </div>
                 </div>
                 { this.props.children }

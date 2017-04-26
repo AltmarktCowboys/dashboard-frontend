@@ -1,4 +1,5 @@
 import { Dispatcher } from "flux";
+import * as assign from "object-assign";
 
 interface Auth0Config {
     domain: string;
@@ -6,6 +7,7 @@ interface Auth0Config {
 }
 
 interface ApiConfig {
+    endpoint: string;
     auth0: Auth0Config;
 }
 
@@ -40,6 +42,15 @@ class App {
 
     public get tiles(): TileDefinition[] {
         return this._tiles;
+    }
+
+    public fetch(path: string, options?: any) {
+        return window.fetch(this.config.api.endpoint + path, assign({}, options, {
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }));
     }
 }
 

@@ -2,7 +2,7 @@
 	{
 		"template_id": "weather",
 		"icon": "fa-sun-o",
-		"title": "Wetter"
+		"title": "Weather"
 	},
 	{
 		"template_id": "twitter",

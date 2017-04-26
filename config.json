@@ -1,5 +1,6 @@
 {
 	"api": {
+		"endpoint": "http://localhost:8080/rest",
 		"auth0": {
 			"domain": "egordergunov.eu.auth0.com",
 			"clientId": "ijay14_cViMZ8jC5ZhukFsDGwM8gsUtO"

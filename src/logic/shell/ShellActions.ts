@@ -36,8 +36,22 @@ class ShellActions {
         });
     }
 
-    public saveConfiguration(data: any) {
+    public saveConfiguration(data: any, tileId: string) {
+        App.dispatcher.dispatch(<Payload>{
+            type: ShellActionTypes.SHELL_ADD_TILE
+        });
 
+        App.fetch(`/tile/${data.templateId}/${data.userId}`, { method: "POST", body: JSON.stringify(data) }).then((response) => {
+            App.dispatcher.dispatch(<Payload>{
+                type: ShellActionTypes.SHELL_ADD_TILE_SUCCESS
+            });
+
+            console.log(response);
+        }).catch((error) => {
+            App.dispatcher.dispatch(<Payload>{
+                type: ShellActionTypes.SHELL_ADD_TILE_FAILURE
+            });
+        });
     }
 }
 
