@@ -1,17 +1,22 @@
 module.exports = [
     {
         test: /\.css$/,
-        exclude: /(src|public)/,
+        include: /(node_modules\\react-toolbox)/,
         loader: "style-loader!css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!postcss-loader"
     },
     {
+        test: /\.css$/,
+        include: /(node_modules\\font-awesome)/,
+        loader: "style-loader!css-loader"
+    },
+    {
         test: /\.scss$/,
-        exclude: /(node_modules|public)/,
+        include: /(src)/,
         loader: "style-loader!css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]!sass-loader"
     },
     {
         test: /\.tsx?$/,
-        exclude: /(node_modules|public)/,
+        include: /(src)/,
         loader: "awesome-typescript-loader"
     },
     {

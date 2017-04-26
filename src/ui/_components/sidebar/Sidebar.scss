@@ -1,13 +1,22 @@
 @import "../../../styles/theme";
 
-$width:                 $sidebar-width;
+$padding:               15px;
 $bg-color:              #444;
+$action-color:          #ccc;
 
 .sidebar {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	width: $sidebar-width;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: $padding;
 	background-color: $bg-color;
+
+	> .row {
+		text-align: center;
+
+		> .action {
+			color: $action-color;
+			cursor: pointer;
+		}
+	}
 }
