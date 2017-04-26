@@ -19,6 +19,7 @@ class ConfigurationDialog extends React.Component<ConfigurationDialogProps, Conf
     constructor(props: ConfigurationDialogProps) {
         super(props);
 
+        this.getValue = this.getValue.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onSave = this.onSave.bind(this);
         this.state = {
@@ -31,6 +32,14 @@ class ConfigurationDialog extends React.Component<ConfigurationDialogProps, Conf
             { label: "Cancel", onClick: this.props.onCancel },
             { label: "Save", onClick: this.onSave }
         ];
+    }
+
+    private getValue(name: string) {
+        if (this.state.values[name] == null) {
+            return "";
+        }
+
+        return this.state.values[name];
     }
 
     private onSave() {
@@ -62,8 +71,8 @@ class ConfigurationDialog extends React.Component<ConfigurationDialogProps, Conf
                 </section>
                 {
                     Configurations[this.props.templateId] != null && React.createElement(Configurations[this.props.templateId], {
-                        values: this.state.values,
-                        onChange: this.onChange
+                        onChange: this.onChange,
+                        getValue: this.getValue
                     })
                 }
             </Dialog>

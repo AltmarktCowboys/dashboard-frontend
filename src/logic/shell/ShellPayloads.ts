@@ -9,3 +9,11 @@ export interface ShellShowConfigurationPayload extends Payload {
     tileId: string;
     templateId: string;
 }
+
+export interface ShellAddTilePayload extends Payload {
+    tile: any;
+}
+
+export interface ShellRefreshDashboardPayload extends Payload {
+    tiles: any,
+}

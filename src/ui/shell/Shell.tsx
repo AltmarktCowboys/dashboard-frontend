@@ -6,7 +6,7 @@ import ShellActions from "./../../logic/shell/ShellActions";
 import ShellState from "./../../logic/shell/ShellState";
 import Sidebar from "./../_components/sidebar/Sidebar";
 import ConfigurationDialog from "./../_components/configuration/ConfigurationDialog";
-import Dashboard from "./../dashboard/Dashboard";
+import Dashboard from "./../_components/dashboard/Dashboard";
 import LoadingOverlay from "../_components/loading_overlay/LoadingOverlay";
 const theme = require("./Shell.scss");
 
@@ -62,6 +62,18 @@ class Shell extends React.Component<null, ShellContainerState> {
         }), this.state.shell.configurationTileId);
     }
 
+    public renderMainArea() {
+        if (this.state.shell.tiles.length > 0) {
+            return (
+                <Dashboard
+                    tiles={ this.state.shell.tiles }
+                />
+            );
+        }
+
+        return null;
+    }
+
     public render() {
         return (
             <div className={ theme["shell-container"] }>
@@ -82,7 +94,7 @@ class Shell extends React.Component<null, ShellContainerState> {
                             onAddTile={ this.onAddTile }
                             onTileSelected={ this.onTileSelected }
                         />
-                        <Dashboard />
+                        { this.renderMainArea() }
                     </div>
                 </LoadingOverlay>
             </div>

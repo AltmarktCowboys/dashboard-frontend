@@ -6,6 +6,7 @@ interface ShellState {
     showTiles: boolean;
     configurationTemplateId: string;
     configurationTileId: string;
+    tiles: any[];
     profile: Auth0UserProfile;
 }
 

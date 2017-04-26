@@ -1,7 +1,7 @@
 import App from "./../../App";
 import Payload from "./../Payload";
 import ShellActionTypes from "./ShellActionTypes";
-import { ShellShowConfigurationPayload } from "./ShellPayloads";
+import { ShellShowConfigurationPayload, ShellAddTilePayload, ShellRefreshDashboardPayload } from "./ShellPayloads";
 
 class ShellActions {
     public signIn() {
@@ -42,14 +42,42 @@ class ShellActions {
         });
 
         App.fetch(`/tile/${data.templateId}/${data.userId}`, { method: "POST", body: JSON.stringify(data) }).then((response) => {
-            App.dispatcher.dispatch(<Payload>{
-                type: ShellActionTypes.SHELL_ADD_TILE_SUCCESS
-            });
+            if (!response.ok) {
+                throw new Error();
+            }
 
-            console.log(response);
+            response.json().then((data) => {
+                App.dispatcher.dispatch(<ShellAddTilePayload>{
+                    type: ShellActionTypes.SHELL_ADD_TILE_SUCCESS,
+                    tile: data
+                });
+            });
         }).catch((error) => {
             App.dispatcher.dispatch(<Payload>{
                 type: ShellActionTypes.SHELL_ADD_TILE_FAILURE
+            });
+        });
+    }
+
+    public refreshDashboard(userId: string) {
+        App.dispatcher.dispatch(<Payload>{
+            type: ShellActionTypes.SHELL_REFRESH_DASHBOARD
+        });
+
+        App.fetch(`/dashboard/${userId}`).then((response) => {
+            if (!response.ok) {
+                throw new Error();
+            }
+
+            const data: any = response.json().then((data) => {
+                App.dispatcher.dispatch(<ShellRefreshDashboardPayload>{
+                    type: ShellActionTypes.SHELL_REFRESH_DASHBOARD_SUCCESS,
+                    tiles: data.tiles
+                });
+            });
+        }).catch((error) => {
+            App.dispatcher.dispatch(<Payload>{
+                type: ShellActionTypes.SHELL_REFRESH_DASHBOARD_FAILURE
             });
         });
     }

@@ -1,3 +1,5 @@
+$bg-color:                  #EAEAEA;
+
 .shell-container {
 	position: absolute;
 	top: 0;
@@ -10,6 +12,6 @@
 		flex-direction: row;
 		width: 100%;
 		height: 100%;
-		background-color: #EAEAEA;
+		background-color: $bg-color;
 	}
 }

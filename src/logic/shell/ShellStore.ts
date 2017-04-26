@@ -3,9 +3,13 @@ import * as assign from "object-assign";
 import Auth0Lock from "auth0-lock";
 import App from "./../../App";
 import Payload from "./../Payload";
+import ShellActions from "./ShellActions";
 import ShellActionTypes from "./ShellActionTypes";
 import ShellState from "./ShellState";
-import {ShellAuthenticatePayload, ShellShowConfigurationPayload} from "./ShellPayloads";
+import {
+    ShellAuthenticatePayload, ShellShowConfigurationPayload, ShellAddTilePayload,
+    ShellRefreshDashboardPayload
+} from "./ShellPayloads";
 
 class ShellStore extends ReduceStore<ShellState, Payload> {
     private _auth: Auth0LockStatic;
@@ -32,6 +36,8 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                 type: ShellActionTypes.SHELL_AUTHENTICATE,
                 profile: profile
             });
+
+            ShellActions.refreshDashboard(profile.user_id);
         });
     }
 
@@ -42,6 +48,7 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
             configurationTileId: null,
             showTiles: false,
             loggedIn: false,
+            tiles: [],
             profile: null
         };
     }
@@ -76,18 +83,28 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                     configurationTemplateId: null,
                     configurationId: null
                 });
+            case ShellActionTypes.SHELL_ADD_TILE_SUCCESS:
+                return assign({}, state, {
+                    loading: false,
+                    configurationTemplateId: null,
+                    configurationId: null,
+                    tiles: state.tiles.concat((<ShellAddTilePayload>payload).tile)
+                });
+            case ShellActionTypes.SHELL_REFRESH_DASHBOARD_SUCCESS:
+                return assign({}, state, {
+                    loading: false,
+                    tiles: (<ShellRefreshDashboardPayload>payload).tiles
+                });
             case ShellActionTypes.SHELL_ADD_TILE:
+            case ShellActionTypes.SHELL_REFRESH_DASHBOARD:
+                return assign({}, state, {
+                    loading: true
+                });
+            case ShellActionTypes.SHELL_REFRESH_DASHBOARD_FAILURE:
+            case ShellActionTypes.SHELL_ADD_TILE_FAILURE:
                 return assign({}, state, {
                     configurationTemplateId: null,
                     configurationId: null,
-                    loading: true
-                });
-            case ShellActionTypes.SHELL_ADD_TILE_SUCCESS:
-                return assign({}, state, {
-                    loading: false
-                });
-            case ShellActionTypes.SHELL_ADD_TILE_FAILURE:
-                return assign({}, state, {
                     loading: false
                 });
         }

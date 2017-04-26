@@ -1,13 +1,14 @@
 import * as React from "react";
+const theme = require("./Tile.scss");
 
-class Tile extends React.Component<null, null> {
-    constructor(props: null) {
-        super(props);
-    }
+interface TileProps {
+    definition: any;
+}
 
+class Tile extends React.Component<TileProps, null> {
     public render() {
         return (
-            <div></div>
+            <div className={ theme["tile"] }>{ this.props.definition.title }</div>
         );
     }
 }

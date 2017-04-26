@@ -24,7 +24,7 @@ class Sidebar extends React.Component<SidebarProps, null> {
     public renderTiles() {
         return App.tiles.map((tile) => {
             return (
-                <div className={ theme["tile"] } onClick={ () => this.props.onTileSelected(tile.template_id) }>
+                <div key={ tile.template_id } className={ theme["tile"] } onClick={ () => this.props.onTileSelected(tile.template_id) }>
                     <span className={ theme["icon"] }><i className={ classNames("fa fa-2x", tile.icon) } /></span>
                     <span className={ theme["title"] }>{ tile.title }</span>
                 </div>
