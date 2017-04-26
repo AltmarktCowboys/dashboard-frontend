@@ -1,22 +1,85 @@
 @import "../../../styles/theme";
 
+$width:                 70px;
 $padding:               15px;
 $bg-color:              #444;
+$bg-hover:              #555;
+$border-color:          #555;
 $action-color:          #ccc;
 
-.sidebar {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	padding: $padding;
-	background-color: $bg-color;
+.sidebar-container {
+	> .sidebar {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: $padding;
+		width: $width;
+		background-color: $bg-color;
+		height: 100%;
 
-	> .row {
-		text-align: center;
+		> .row {
+			text-align: center;
 
-		> .action {
+			> .action {
+				color: $action-color;
+				cursor: pointer;
+
+				&:not(:last-child) {
+					margin-bottom: 20px;
+				}
+			}
+		}
+	}
+
+	> .tiles-view {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		padding: $padding 0;
+		background-color: $bg-color;
+		transition: left 0.5s ease;
+
+		&.show {
+			border-left: 1px solid $border-color;
+			left: $width;
+		}
+
+		&.hide {
+			left: -500px;
+		}
+
+		> .tile {
+			display: table;
+			width: 100%;
+			padding: 10px 0;
+			border-top: 1px solid $border-color;
 			color: $action-color;
 			cursor: pointer;
+
+			&:last-child {
+				border-bottom: 1px solid $border-color;
+			}
+
+			&:hover {
+				background-color: $bg-hover;
+			}
+
+			> * {
+				display: table-cell;
+			}
+
+			> .icon {
+				padding: 0 20px 0 20px;
+			}
+
+			> .title {
+				text-align: left;
+				font-size: 16px;
+				padding: 0 20px 0 20px;
+			}
 		}
 	}
 }

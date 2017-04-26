@@ -13,9 +13,15 @@ interface Config {
     api: ApiConfig;
 }
 
+interface Tile {
+    template_id: string;
+    icon: string;
+    title: string;
+}
+
 class App {
     private _config: Config;
-    private _tiles: any;
+    private _tiles: Tile[];
     private _dispatcher: Dispatcher<any>;
 
     constructor() {
@@ -32,7 +38,7 @@ class App {
         return this._config;
     }
 
-    public get tiles() {
+    public get tiles(): Tile[] {
         return this._tiles;
     }
 }

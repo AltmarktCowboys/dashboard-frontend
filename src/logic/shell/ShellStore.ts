@@ -5,7 +5,7 @@ import App from "./../../App";
 import Payload from "./../Payload";
 import ShellActionTypes from "./ShellActionTypes";
 import ShellState from "./ShellState";
-import { ShellAuthenticatePayload } from "./ShellPayloads";
+import {ShellAuthenticatePayload, ShellShowConfigurationPayload} from "./ShellPayloads";
 
 class ShellStore extends ReduceStore<ShellState, Payload> {
     private _auth: Auth0LockStatic;
@@ -30,6 +30,9 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
 
     public getInitialState(): ShellState {
         return {
+            configurationTemplateId: null,
+            configurationId: null,
+            showTiles: false,
             loggedIn: false,
             profile: null
         };
@@ -49,6 +52,21 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                 return assign({}, state, {
                     loggedIn: true,
                     profile: (<ShellAuthenticatePayload>payload).profile
+                });
+            case ShellActionTypes.SHELL_SHOW_TILES:
+                return assign({}, state, {
+                    showTiles: true
+                });
+            case ShellActionTypes.SHELL_SHOW_CONFIGURATION:
+                return assign({}, state, {
+                    showTiles: false,
+                    configurationTemplateId: (<ShellShowConfigurationPayload>payload).templateId,
+                    configurationId: (<ShellShowConfigurationPayload>payload).id
+                });
+            case ShellActionTypes.SHELL_CANCEL_CONFIGURATION:
+                return assign({}, state, {
+                    configurationTemplateId: null,
+                    configurationId: null
                 });
         }
 

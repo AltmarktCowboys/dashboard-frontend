@@ -10,9 +10,9 @@ interface ActionProps {
 class Action extends React.Component<ActionProps, null> {
     public render() {
         return (
-            <span {...this.props} className={ theme["action"] } onClick={ () => this.props.onClick() }>
+            <div {...this.props} className={ theme["action"] } onClick={ () => this.props.onClick() }>
                 <i className={ classNames(this.props.icon, "fa fa-2x") } />
-            </span>
+            </div>
         );
     }
 }
