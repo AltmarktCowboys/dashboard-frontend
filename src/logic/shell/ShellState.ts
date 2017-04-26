@@ -4,7 +4,7 @@ interface ShellState {
     loggedIn: boolean;
     showTiles: boolean;
     configurationTemplateId: string;
-    configurationId: string;
+    configurationTileId: string;
     profile: Auth0UserProfile;
 }
 

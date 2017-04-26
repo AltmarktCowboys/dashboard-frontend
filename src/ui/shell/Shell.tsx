@@ -1,11 +1,13 @@
 import * as React from "react";
+import * as assign from "object-assign";
 import { Container, Store } from "flux/utils";
-import Dialog from "react-toolbox/lib/dialog";
 import ShellStore from "./../../logic/shell/ShellStore";
 import ShellActions from "./../../logic/shell/ShellActions";
 import ShellState from "./../../logic/shell/ShellState";
 import Sidebar from "./../_components/sidebar/Sidebar";
+import ConfigurationDialog from "./../_components/configuration/ConfigurationDialog";
 import Dashboard from "./../dashboard/Dashboard";
+import LoadingOverlay from "../_components/loading_overlay/LoadingOverlay";
 const theme = require("./Shell.scss");
 
 interface ShellContainerState {
@@ -17,6 +19,11 @@ class Shell extends React.Component<null, ShellContainerState> {
         super(props);
 
         this.onSignIn = this.onSignIn.bind(this);
+        this.onSignOut = this.onSignOut.bind(this);
+        this.onAddTile = this.onAddTile.bind(this);
+        this.onTileSelected = this.onTileSelected.bind(this);
+        this.cancelConfiguration = this.cancelConfiguration.bind(this);
+        this.saveConfiguration = this.saveConfiguration.bind(this);
     }
 
     public static calculateState(): ShellContainerState {
@@ -49,27 +56,21 @@ class Shell extends React.Component<null, ShellContainerState> {
         ShellActions.cancelConfiguration();
     }
 
-    private getConfigurationActions() {
-        return [
-            { label: "Cancel", onClick: this.cancelConfiguration },
-            { label: "Save", onClick: null }
-        ];
+    private saveConfiguration(data: any) {
+        ShellActions.saveConfiguration(assign({}, data, {
+            userId: this.state.shell.profile.user_id
+        }));
     }
 
     public render() {
         return (
             <div className={ theme["shell"] }>
-                <Dialog
-                    type="small"
-                    actions={ this.getConfigurationActions() }
-                    active={ this.state.shell.configurationTemplateId != null }
-                    onOverlayClick={ this.cancelConfiguration }
-                    title='New Tile'
-                >
-                    <section>
-                        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16 } />
-                    </section>
-                </Dialog>
+                <ConfigurationDialog
+                    tileId={ this.state.shell.configurationTileId }
+                    templateId={ this.state.shell.configurationTemplateId }
+                    onCancel={ this.cancelConfiguration }
+                    onSave={ this.saveConfiguration }
+                />
                 <Sidebar
                     showTiles={ this.state.shell.showTiles }
                     loggedIn={ this.state.shell.loggedIn }

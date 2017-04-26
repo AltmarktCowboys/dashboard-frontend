@@ -6,6 +6,6 @@ export interface ShellAuthenticatePayload extends Payload {
 }
 
 export interface ShellShowConfigurationPayload extends Payload {
-    id: string;
+    tileId: string;
     templateId: string;
 }

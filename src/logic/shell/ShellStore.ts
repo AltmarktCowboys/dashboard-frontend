@@ -31,7 +31,7 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
     public getInitialState(): ShellState {
         return {
             configurationTemplateId: null,
-            configurationId: null,
+            configurationTileId: null,
             showTiles: false,
             loggedIn: false,
             profile: null
@@ -61,7 +61,7 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                 return assign({}, state, {
                     showTiles: false,
                     configurationTemplateId: (<ShellShowConfigurationPayload>payload).templateId,
-                    configurationId: (<ShellShowConfigurationPayload>payload).id
+                    configurationTileId: (<ShellShowConfigurationPayload>payload).tileId
                 });
             case ShellActionTypes.SHELL_CANCEL_CONFIGURATION:
                 return assign({}, state, {

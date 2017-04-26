@@ -1,0 +1,43 @@
+.loading-overlay {
+	position: relative;
+	height: 100%;
+	width: 100%;
+
+	> .loading-screen {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		text-align: center;
+		background-color: rgba(255, 255, 255, .4);
+		z-index: 9999;
+		display: none;
+
+		&:before {
+			content: '';
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+		}
+
+		&.active {
+			display: block;
+		}
+
+		> .loading-body {
+			position: relative;
+			display: inline-block;
+			vertical-align: middle;
+
+			> i {
+				color: #999;
+			}
+
+			> .info {
+				margin-top: 10px;
+				font-weight: 700;
+			}
+		}
+	}
+}
