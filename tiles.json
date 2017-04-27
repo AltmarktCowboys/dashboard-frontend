@@ -10,8 +10,8 @@
 		"template_id": "twitter",
 		"icon": "fa-twitter",
 		"desc": "Twitter",
-		"height": 1,
-		"width": 1
+		"height": 3,
+		"width": 3
 	},
 	{
 		"template_id": "oneclick",

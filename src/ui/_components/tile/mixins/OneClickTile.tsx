@@ -8,7 +8,7 @@ class OneClickTile extends React.Component<TileProps, null> {
 
     public render() {
         return (
-            <div style={ { padding: "20px" } } onClick={ this.openLink.bind(this, this.props.content.directLink) }>
+            <div style={ { padding: "20px" } } onClick={ this.openLink.bind(this, this.props.content.DirectLink) }>
                 <div style={ { color: "#0081c6" } }>ADDISON</div>
                 <div style={ { color: "#E6742E" } }>OneClick</div>
             </div>
