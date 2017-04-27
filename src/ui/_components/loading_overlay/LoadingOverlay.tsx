@@ -5,6 +5,7 @@ const theme = require("./LoadingOverlay.scss");
 
 interface LoadingOverlayProps {
     loading: boolean;
+    icon?: string;
 }
 
 class LoadingOverlay extends React.Component<LoadingOverlayProps, undefined> {
@@ -13,11 +14,21 @@ class LoadingOverlay extends React.Component<LoadingOverlayProps, undefined> {
             [theme["active"]]: this.props.loading
         });
 
+        let icon = (
+            <PacmanLoader color="#4DAF7C" />
+        );
+
+        if (this.props.icon != null) {
+            icon = (
+                <i className={ classNames("fa fa-3x fa-fw", this.props.icon) } style={ { color: "#888" } } />
+            );
+        }
+
         return (
             <div className={ theme["loading-overlay"] }>
                 <div className={ loadingClass }>
                     <div className={ theme["loading-body"] }>
-                        <PacmanLoader color="#4DAF7C" />
+                        { icon }
                     </div>
                 </div>
                 { this.props.children }

@@ -67,10 +67,21 @@ class Dashboard extends React.Component<DashboardContainerProps, DashboardContai
     public renderTiles() {
         return this.props.tiles.map((tile: any) => {
             const def = assign({}, tile.definition, App.getTile(tile.definition.templateId));
+            let content = (
+                <Tile definition={ def } content={ tile.content } loading={ tile.loading } onDelete={ this.onDeleteClick } />
+            );
+
+            if (!this.props.fixed) {
+                content = (
+                    <LoadingOverlay loading={ true } icon="fa-arrows-alt">
+                        <Tile definition={ def } content={ tile.content } loading={ tile.loading } onDelete={ this.onDeleteClick } />
+                    </LoadingOverlay>
+                );
+            }
 
             return (
                 <div key={ def.id }>
-                    <Tile definition={ def } content={ tile.content } loading={ tile.loading } onDelete={ this.onDeleteClick } />
+                    { content }
                 </div>
             );
         });
