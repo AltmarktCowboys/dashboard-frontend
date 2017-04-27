@@ -14,7 +14,7 @@ class JiraTile extends React.Component<TileProps, null> {
                 <ListItem
                     key={ i }
                     className={ theme["list-item"] }
-                    caption={ issue.key }
+                    caption={ `${issue.summary} - ${issue.key}` }
                     legend={ issue.state }
                     onClick={ this.onItemClick.bind(this, issue.url) }
                 />
