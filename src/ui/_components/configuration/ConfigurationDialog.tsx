@@ -46,6 +46,10 @@ class ConfigurationDialog extends React.Component<ConfigurationDialogProps, Conf
         this.props.onSave(assign({}, this.state.values, {
             templateId: this.props.templateId
         }));
+
+        this.setState({
+            values: {}
+        });
     }
 
     private onChange(name: string, value: any) {
