@@ -18,18 +18,26 @@ interface Config {
 interface TileDefinition {
     template_id: string;
     icon: string;
-    title: string;
+    desc: string;
+    width: number;
+    height: number;
 }
 
 class App {
     private _config: Config;
     private _tiles: TileDefinition[];
+    private _tilesObject: any;
     private _dispatcher: Dispatcher<any>;
 
     constructor() {
         this._dispatcher = new Dispatcher();
         this._config = require("./../config.json");
         this._tiles = require("./../tiles.json");
+        this._tilesObject = {};
+
+        this._tiles.forEach((tile) => {
+            this._tilesObject[tile.template_id] = tile;
+        });
     }
 
     public get dispatcher(): Dispatcher<any> {
@@ -42,6 +50,10 @@ class App {
 
     public get tiles(): TileDefinition[] {
         return this._tiles;
+    }
+
+    public getTile(tile: string): TileDefinition {
+        return this._tilesObject[tile];
     }
 
     public fetch(path: string, options?: any) {

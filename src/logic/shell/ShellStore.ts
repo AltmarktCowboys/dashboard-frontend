@@ -8,7 +8,7 @@ import ShellActionTypes from "./ShellActionTypes";
 import ShellState from "./ShellState";
 import {
     ShellAuthenticatePayload, ShellShowConfigurationPayload, ShellAddTilePayload,
-    ShellRefreshDashboardPayload
+    ShellRefreshDashboardPayload, ShellRefreshTileContent, ShellRefreshTileContentSuccess
 } from "./ShellPayloads";
 
 class ShellStore extends ReduceStore<ShellState, Payload> {
@@ -88,18 +88,42 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                     loading: false,
                     configurationTemplateId: null,
                     configurationId: null,
-                    tiles: state.tiles.concat((<ShellAddTilePayload>payload).tile)
+                    tiles: state.tiles.concat({
+                        definition: (<ShellAddTilePayload>payload).tile,
+                        loading: false,
+                        content: {}
+                    })
                 });
             case ShellActionTypes.SHELL_REFRESH_DASHBOARD_SUCCESS:
                 return assign({}, state, {
                     loading: false,
-                    tiles: (<ShellRefreshDashboardPayload>payload).tiles
+                    tiles: (<ShellRefreshDashboardPayload>payload).tiles.map((tile: any) => {
+                        return {
+                            definition: tile,
+                            loading: false,
+                            content: {}
+                        };
+                    })
                 });
+            case ShellActionTypes.SHELL_REFRESH_TILE_CONTENT_SUCCESS:
+                state.tiles.forEach((tile, i) => {
+                    if (tile.definition.id == (<ShellRefreshTileContentSuccess>payload).tileId) {
+                        state.tiles[i].loading = false;
+                    }
+                });
+            case ShellActionTypes.SHELL_REFRESH_TILE_CONTENT:
+                state.tiles.forEach((tile, i) => {
+                    if (tile.definition.id == (<ShellRefreshTileContent>payload).tileId) {
+                        state.tiles[i].loading = true;
+                    }
+                });
+                return assign({}, state);
             case ShellActionTypes.SHELL_ADD_TILE:
             case ShellActionTypes.SHELL_REFRESH_DASHBOARD:
                 return assign({}, state, {
                     loading: true
                 });
+            case ShellActionTypes.SHELL_REFRESH_TILE_CONTENT_FAILURE:
             case ShellActionTypes.SHELL_REFRESH_DASHBOARD_FAILURE:
             case ShellActionTypes.SHELL_ADD_TILE_FAILURE:
                 return assign({}, state, {

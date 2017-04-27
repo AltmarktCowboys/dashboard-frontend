@@ -2,31 +2,36 @@
 	{
 		"template_id": "weather",
 		"icon": "fa-sun-o",
-		"title": "Weather"
+		"desc": "Weather",
+		"height": 2,
+		"width": 2
 	},
 	{
 		"template_id": "twitter",
 		"icon": "fa-twitter",
-		"title": "Twitter"
+		"desc": "Twitter",
+		"height": 1,
+		"width": 1
 	},
 	{
 		"template_id": "oneclick",
 		"icon": "fa-inbox",
-		"title": "ADDISON OneClick"
+		"desc": "ADDISON OneClick",
+		"height": 1,
+		"width": 1
 	},
 	{
 		"template_id": "news",
 		"icon": "fa-newspaper-o",
-		"title": "Google News"
+		"desc": "Google News",
+		"height": 1,
+		"width": 1
 	},
 	{
 		"template_id": "youtube",
 		"icon": "fa-youtube",
-		"title": "Youtube"
-	},
-	{
-		"template_id": "radio",
-		"icon": "fa-headphones",
-		"title": "Online Radio"
+		"desc": "Youtube",
+		"height": 1,
+		"width": 1
 	}
 ]

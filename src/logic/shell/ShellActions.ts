@@ -1,7 +1,10 @@
 import App from "./../../App";
 import Payload from "./../Payload";
 import ShellActionTypes from "./ShellActionTypes";
-import { ShellShowConfigurationPayload, ShellAddTilePayload, ShellRefreshDashboardPayload } from "./ShellPayloads";
+import {
+    ShellShowConfigurationPayload, ShellAddTilePayload, ShellRefreshDashboardPayload,
+    ShellRefreshTileContent, ShellRefreshTileContentSuccess
+} from "./ShellPayloads";
 
 class ShellActions {
     public signIn() {
@@ -69,15 +72,44 @@ class ShellActions {
                 throw new Error();
             }
 
-            const data: any = response.json().then((data) => {
+            response.json().then((data) => {
                 App.dispatcher.dispatch(<ShellRefreshDashboardPayload>{
                     type: ShellActionTypes.SHELL_REFRESH_DASHBOARD_SUCCESS,
                     tiles: data.tiles
+                });
+
+                data.tiles.forEach((tile: any) => {
+                    this.refreshTileContent(tile.templateId, tile.id, userId);
                 });
             });
         }).catch((error) => {
             App.dispatcher.dispatch(<Payload>{
                 type: ShellActionTypes.SHELL_REFRESH_DASHBOARD_FAILURE
+            });
+        });
+    }
+
+    public refreshTileContent(templateId: string, tileId: string, userId: string) {
+        App.dispatcher.dispatch(<ShellRefreshTileContent>{
+            type: ShellActionTypes.SHELL_REFRESH_TILE_CONTENT,
+            tileId: tileId
+        });
+
+        App.fetch(`/tile/${templateId}/${userId}/${tileId}/content`).then((response) => {
+            if (!response.ok) {
+                throw new Error();
+            }
+
+            response.json().then((data) => {
+                App.dispatcher.dispatch(<ShellRefreshTileContentSuccess>{
+                    type: ShellActionTypes.SHELL_REFRESH_TILE_CONTENT_SUCCESS,
+                    tileId: tileId,
+                    content: data
+                });
+            });
+        }).catch((error) => {
+            App.dispatcher.dispatch(<Payload>{
+                type: ShellActionTypes.SHELL_REFRESH_TILE_CONTENT_FAILURE
             });
         });
     }

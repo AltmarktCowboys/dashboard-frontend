@@ -1,5 +1,27 @@
 .tile {
 	width: 100%;
 	height: 100%;
-	background-color: gray;
+
+	.tile-header {
+		color: #333;
+		padding: 7px;
+		border-bottom: 1px solid #DDD;
+
+		> i {
+			margin-right: 10px;
+		}
+
+		> .actions {
+			float: right;
+
+			> i {
+				color: #555;
+				cursor: pointer;
+
+				&:not(:last-child) {
+					margin-right: 7px;
+				}
+			}
+		}
+	}
 }

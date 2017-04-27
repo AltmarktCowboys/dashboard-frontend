@@ -17,3 +17,12 @@ export interface ShellAddTilePayload extends Payload {
 export interface ShellRefreshDashboardPayload extends Payload {
     tiles: any,
 }
+
+export interface ShellRefreshTileContent extends Payload {
+    tileId: string;
+}
+
+export interface ShellRefreshTileContentSuccess extends Payload {
+    tileId: string;
+    content: any;
+}
