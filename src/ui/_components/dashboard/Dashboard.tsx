@@ -105,7 +105,7 @@ class Dashboard extends React.Component<DashboardContainerProps, DashboardContai
                 >
                     <p>Delete tile?</p>
                 </Dialog>
-                <ReactGridLayout layout={ layout } cols={ columnCount } isResizable={ false }>
+                <ReactGridLayout layout={ layout } cols={ columnCount } isResizable={ false } isDraggable={ false }>
                     { this.renderTiles() }
                 </ReactGridLayout>
             </div>

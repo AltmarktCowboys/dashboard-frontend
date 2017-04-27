@@ -128,11 +128,9 @@ class ShellActions {
                 throw new Error();
             }
 
-            response.json().then(() => {
-                App.dispatcher.dispatch(<ShellTileIdPayload>{
-                    type: ShellActionTypes.SHELL_DELETE_TILE_SUCCESS,
-                    tileId: tileId
-                });
+            App.dispatcher.dispatch(<ShellTileIdPayload>{
+                type: ShellActionTypes.SHELL_DELETE_TILE_SUCCESS,
+                tileId: tileId
             });
         }).catch((error) => {
             App.dispatcher.dispatch(<ShellTileIdPayload>{
