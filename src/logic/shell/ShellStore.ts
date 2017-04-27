@@ -8,7 +8,7 @@ import ShellActionTypes from "./ShellActionTypes";
 import ShellState from "./ShellState";
 import {
     ShellAuthenticatePayload, ShellShowConfigurationPayload, ShellAddTilePayload,
-    ShellRefreshDashboardPayload, ShellRefreshTileContent, ShellRefreshTileContentSuccess
+    ShellRefreshDashboardPayload, ShellRefreshTileContentSuccessPayload, ShellTileIdPayload,
 } from "./ShellPayloads";
 
 class ShellStore extends ReduceStore<ShellState, Payload> {
@@ -91,7 +91,7 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                     tiles: state.tiles.concat({
                         definition: (<ShellAddTilePayload>payload).tile,
                         loading: false,
-                        content: {}
+                        content: null as {}
                     })
                 });
             case ShellActionTypes.SHELL_REFRESH_DASHBOARD_SUCCESS:
@@ -101,19 +101,31 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                         return {
                             definition: tile,
                             loading: false,
-                            content: {}
+                            content: null as {}
                         };
                     })
                 });
             case ShellActionTypes.SHELL_REFRESH_TILE_CONTENT_SUCCESS:
                 state.tiles.forEach((tile, i) => {
-                    if (tile.definition.id == (<ShellRefreshTileContentSuccess>payload).tileId) {
+                    if (tile.definition.id == (<ShellRefreshTileContentSuccessPayload>payload).tileId) {
                         state.tiles[i].loading = false;
+                        state.tiles[i].content = (<ShellRefreshTileContentSuccessPayload>payload).content;
                     }
                 });
+                return assign({}, state);
+            case ShellActionTypes.SHELL_DELETE_TILE_SUCCESS:
+                let index = 0;
+                state.tiles.forEach((tile, i) => {
+                    if (tile.definition.id == (<ShellTileIdPayload>payload).tileId) {
+                        index = i;
+                    }
+                });
+                state.tiles.splice(index, 1);
+                return assign({}, state);
+            case ShellActionTypes.SHELL_DELETE_TILE:
             case ShellActionTypes.SHELL_REFRESH_TILE_CONTENT:
                 state.tiles.forEach((tile, i) => {
-                    if (tile.definition.id == (<ShellRefreshTileContent>payload).tileId) {
+                    if (tile.definition.id == (<ShellTileIdPayload>payload).tileId) {
                         state.tiles[i].loading = true;
                     }
                 });
@@ -123,7 +135,14 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                 return assign({}, state, {
                     loading: true
                 });
+            case ShellActionTypes.SHELL_DELETE_TILE_FAILURE:
             case ShellActionTypes.SHELL_REFRESH_TILE_CONTENT_FAILURE:
+                state.tiles.forEach((tile, i) => {
+                    if (tile.definition.id == (<ShellTileIdPayload>payload).tileId) {
+                        state.tiles[i].loading = false;
+                    }
+                });
+                return assign({}, state);
             case ShellActionTypes.SHELL_REFRESH_DASHBOARD_FAILURE:
             case ShellActionTypes.SHELL_ADD_TILE_FAILURE:
                 return assign({}, state, {

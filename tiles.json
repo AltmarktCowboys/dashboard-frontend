@@ -24,14 +24,14 @@
 		"template_id": "news",
 		"icon": "fa-newspaper-o",
 		"desc": "Google News",
-		"height": 1,
-		"width": 1
+		"height": 3,
+		"width": 3
 	},
 	{
-		"template_id": "youtube",
-		"icon": "fa-youtube",
-		"desc": "Youtube",
-		"height": 1,
-		"width": 1
+		"template_id": "jira",
+		"icon": "fa-bug",
+		"desc": "Jira",
+		"height": 3,
+		"width": 3
 	}
 ]

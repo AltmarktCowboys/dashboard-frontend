@@ -24,6 +24,7 @@ class Shell extends React.Component<null, ShellContainerState> {
         this.onTileSelected = this.onTileSelected.bind(this);
         this.cancelConfiguration = this.cancelConfiguration.bind(this);
         this.saveConfiguration = this.saveConfiguration.bind(this);
+        this.onDeleteTile = this.onDeleteTile.bind(this);
     }
 
     public static calculateState(): ShellContainerState {
@@ -56,6 +57,10 @@ class Shell extends React.Component<null, ShellContainerState> {
         ShellActions.cancelConfiguration();
     }
 
+    private onDeleteTile(templateId: string, tileId: string) {
+        ShellActions.deleteTile(templateId, tileId, this.state.shell.profile.user_id);
+    }
+
     private saveConfiguration(data: any) {
         ShellActions.saveConfiguration(assign({}, data, {
             userId: this.state.shell.profile.user_id
@@ -67,6 +72,7 @@ class Shell extends React.Component<null, ShellContainerState> {
             return (
                 <Dashboard
                     tiles={ this.state.shell.tiles }
+                    onDeleteTile={ this.onDeleteTile }
                 />
             );
         }

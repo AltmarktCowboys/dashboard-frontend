@@ -14,7 +14,7 @@
 		> .actions {
 			float: right;
 
-			> i {
+			> span {
 				color: #555;
 				cursor: pointer;
 
@@ -23,5 +23,9 @@
 				}
 			}
 		}
+	}
+
+	.list-item {
+		white-space: normal;
 	}
 }

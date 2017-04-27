@@ -18,11 +18,11 @@ export interface ShellRefreshDashboardPayload extends Payload {
     tiles: any,
 }
 
-export interface ShellRefreshTileContent extends Payload {
+export interface ShellTileIdPayload extends Payload {
     tileId: string;
 }
 
-export interface ShellRefreshTileContentSuccess extends Payload {
+export interface ShellRefreshTileContentSuccessPayload extends Payload {
     tileId: string;
     content: any;
 }
