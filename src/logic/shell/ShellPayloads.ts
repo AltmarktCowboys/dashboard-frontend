@@ -26,3 +26,7 @@ export interface ShellRefreshTileContentSuccessPayload extends Payload {
     tileId: string;
     content: any;
 }
+
+export interface ShellSwitchDashboardLayoutPayload extends Payload {
+    fixed: boolean;
+}

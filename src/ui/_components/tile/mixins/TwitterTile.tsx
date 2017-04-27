@@ -4,6 +4,10 @@ import TileProps from "./../TileProps";
 const theme = require("./../Tile.scss");
 
 class TwitterTile extends React.Component<TileProps, null> {
+    private openLink(url: string) {
+        window.open(url, '_blank').focus();
+    }
+
     private renderTweets() {
         return this.props.content.tweets.map((tweet: any, i: number) => {
             return (

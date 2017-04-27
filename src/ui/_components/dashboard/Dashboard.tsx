@@ -3,6 +3,7 @@ import * as assign from "object-assign";
 import Dialog from "react-toolbox/lib/dialog";
 import App from "./../../../App";
 import Tile from "./../tile/Tile";
+import LoadingOverlay from "./../loading_overlay/LoadingOverlay";
 const WidthProvider = require("react-grid-layout").WidthProvider;
 const ReactGridLayout = WidthProvider(require("react-grid-layout"));
 const theme = require("./Dashboard.scss");
@@ -10,6 +11,7 @@ const columnCount = 10;
 
 interface DashboardContainerProps {
     tiles: any[];
+    fixed: boolean;
     onDeleteTile: (templateId: string, tileId: string) => void;
 }
 
@@ -105,7 +107,7 @@ class Dashboard extends React.Component<DashboardContainerProps, DashboardContai
                 >
                     <p>Delete tile?</p>
                 </Dialog>
-                <ReactGridLayout layout={ layout } cols={ columnCount } isResizable={ false } isDraggable={ false }>
+                <ReactGridLayout layout={ layout } cols={ columnCount } isResizable={ false } isDraggable={ !this.props.fixed }>
                     { this.renderTiles() }
                 </ReactGridLayout>
             </div>

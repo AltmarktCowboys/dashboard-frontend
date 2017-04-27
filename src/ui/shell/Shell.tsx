@@ -25,6 +25,7 @@ class Shell extends React.Component<null, ShellContainerState> {
         this.cancelConfiguration = this.cancelConfiguration.bind(this);
         this.saveConfiguration = this.saveConfiguration.bind(this);
         this.onDeleteTile = this.onDeleteTile.bind(this);
+        this.onLayoutClick = this.onLayoutClick.bind(this);
     }
 
     public static calculateState(): ShellContainerState {
@@ -67,12 +68,17 @@ class Shell extends React.Component<null, ShellContainerState> {
         }), this.state.shell.configurationTileId);
     }
 
+    private onLayoutClick() {
+        ShellActions.switchDashboardLayout(!this.state.shell.dashboardFixed);
+    }
+
     public renderMainArea() {
         if (this.state.shell.tiles.length > 0) {
             return (
                 <Dashboard
                     tiles={ this.state.shell.tiles }
                     onDeleteTile={ this.onDeleteTile }
+                    fixed={ this.state.shell.dashboardFixed }
                 />
             );
         }
@@ -95,10 +101,12 @@ class Shell extends React.Component<null, ShellContainerState> {
                             showTiles={ this.state.shell.showTiles }
                             loggedIn={ this.state.shell.loggedIn }
                             image={ this.state.shell.loggedIn ? this.state.shell.profile.picture : null }
+                            dashboardFixed={ this.state.shell.dashboardFixed }
                             onSignIn={ this.onSignIn }
                             onSignOut={ this.onSignOut }
                             onAddTile={ this.onAddTile }
                             onTileSelected={ this.onTileSelected }
+                            onLayoutClick={ this.onLayoutClick }
                         />
                         { this.renderMainArea() }
                     </div>

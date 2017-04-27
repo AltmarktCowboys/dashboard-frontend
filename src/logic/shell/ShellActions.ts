@@ -3,7 +3,7 @@ import Payload from "./../Payload";
 import ShellActionTypes from "./ShellActionTypes";
 import {
     ShellShowConfigurationPayload, ShellAddTilePayload, ShellRefreshDashboardPayload, ShellTileIdPayload,
-    ShellRefreshTileContentSuccessPayload,
+    ShellRefreshTileContentSuccessPayload, ShellSwitchDashboardLayoutPayload,
 } from "./ShellPayloads";
 
 class ShellActions {
@@ -137,6 +137,13 @@ class ShellActions {
                 type: ShellActionTypes.SHELL_DELETE_TILE_FAILURE,
                 tileId: tileId
             });
+        });
+    }
+
+    public switchDashboardLayout(fixed: boolean) {
+        App.dispatcher.dispatch(<ShellSwitchDashboardLayoutPayload>{
+            type: ShellActionTypes.SHELL_SWITCH_DASHBOARD_LAYOUT,
+            fixed: fixed
         });
     }
 }

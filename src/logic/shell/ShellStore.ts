@@ -9,6 +9,7 @@ import ShellState from "./ShellState";
 import {
     ShellAuthenticatePayload, ShellShowConfigurationPayload, ShellAddTilePayload,
     ShellRefreshDashboardPayload, ShellRefreshTileContentSuccessPayload, ShellTileIdPayload,
+    ShellSwitchDashboardLayoutPayload,
 } from "./ShellPayloads";
 
 class ShellStore extends ReduceStore<ShellState, Payload> {
@@ -49,7 +50,8 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
             showTiles: false,
             loggedIn: false,
             tiles: [],
-            profile: null
+            profile: null,
+            dashboardFixed: true
         };
     }
 
@@ -61,7 +63,10 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
             case ShellActionTypes.SHELL_SIGN_OUT:
                 return assign({}, state, {
                     loggedIn: false,
-                    profile: null
+                    profile: null,
+                    tiles: [],
+                    showTiles: false,
+                    dashboardFixed: true
                 });
             case ShellActionTypes.SHELL_AUTHENTICATE:
                 return assign({}, state, {
@@ -149,6 +154,10 @@ class ShellStore extends ReduceStore<ShellState, Payload> {
                     configurationTemplateId: null,
                     configurationId: null,
                     loading: false
+                });
+            case ShellActionTypes.SHELL_SWITCH_DASHBOARD_LAYOUT:
+                return assign({}, state, {
+                    dashboardFixed: (<ShellSwitchDashboardLayoutPayload>payload).fixed
                 });
         }
 

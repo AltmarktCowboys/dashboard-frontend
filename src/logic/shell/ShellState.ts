@@ -7,6 +7,7 @@ interface TileState {
 }
 
 interface ShellState {
+    dashboardFixed: boolean;
     loading: boolean;
     loggedIn: boolean;
     showTiles: boolean;

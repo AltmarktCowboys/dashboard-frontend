@@ -7,6 +7,7 @@ import Action from "./Action";
 const theme = require("./Sidebar.scss");
 
 interface SidebarProps {
+    dashboardFixed: boolean;
     showTiles: boolean;
     loggedIn: boolean;
     image: string;
@@ -14,6 +15,7 @@ interface SidebarProps {
     onSignOut: () => void;
     onAddTile: () => void;
     onTileSelected: (templateId: string) => void;
+    onLayoutClick: () => void;
 }
 
 class Sidebar extends React.Component<SidebarProps, null> {
@@ -41,10 +43,12 @@ class Sidebar extends React.Component<SidebarProps, null> {
 
         let mainRow = <div className={ theme["row"] } />;
         if (this.props.loggedIn) {
+            const icon = this.props.dashboardFixed ? "fa-lock" : "fa-unlock";
+
             mainRow = (
                 <div className={ theme["row"] }>
                     <TooltipAction tooltip="Add Tile" icon="fa-plus-circle" onClick={ this.props.onAddTile } />
-                    <TooltipAction tooltip="Settings" icon="fa-cog" onClick={ null } />
+                    <TooltipAction tooltip="Settings" icon={ icon } onClick={ this.props.onLayoutClick } />
                 </div>
             );
         }
